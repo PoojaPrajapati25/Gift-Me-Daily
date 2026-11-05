@@ -1,0 +1,42 @@
+body{
+    background:#f4f7fc;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+/* Navbar */
+
+.navbar{
+    box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+
+/* Cards */
+
+.card{
+    border:none;
+    border-radius:15px;
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 10px 20px rgba(0,0,0,.15);
+}
+
+/* Buttons */
+
+.btn{
+    border-radius:10px;
+}
+
+/* Table */
+
+.table{
+    background:white;
+}
+
+/* Form */
+
+.form-control,
+.form-select{
+    border-radius:10px;
+}
