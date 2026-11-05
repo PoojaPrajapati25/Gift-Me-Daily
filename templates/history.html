@@ -1,0 +1,66 @@
+ 
+{% extends "base.html" %}
+
+{% block title %}
+Prediction History
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5">
+
+    <h2 class="text-center mb-4">Prediction History</h2>
+
+    {% if records %}
+
+    <div class="table-responsive shadow-sm">
+
+        <table class="table table-bordered table-hover table-striped bg-white align-middle text-center">
+
+            <thead class="table-dark">
+
+                <tr>
+                    <th>Product</th>
+                    <th>Product Value (₹)</th>
+                    <th>Destination PIN</th>
+                    <th>Weight (grams)</th>
+                    <th>Shipping Cost (₹)</th>
+                    <th>Delivery Days</th>
+                    <th>Date & Time</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for record in records %}
+
+                <tr>
+                    <td>{{ record[0] }}</td>
+                    <td>₹{{ "%.2f"|format(record[1]) }}</td>
+                    <td>{{ record[2] }}</td>
+                    <td>{{ record[3] }}</td>
+                    <td>₹{{ "%.2f"|format(record[4]) }}</td>
+                    <td>{{ record[5] }}</td>
+                    <td>{{ record[6] }}</td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% else %}
+
+    <div class="alert alert-info text-center">
+        No prediction history available yet.
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

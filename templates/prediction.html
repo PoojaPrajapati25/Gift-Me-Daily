@@ -1,0 +1,183 @@
+ 
+{% extends "base.html" %}
+
+{% block title %}
+Shipping Prediction
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4 mb-5">
+
+    <div class="card shadow-lg border-0">
+
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">
+                Shipping Cost & Delivery Time Prediction
+            </h3>
+        </div>
+
+        <div class="card-body">
+
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+            {% endif %}
+
+            <form action="{{ url_for('predict') }}" method="POST">
+
+                <div class="row">
+
+                    <!-- Product Name -->
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Product Name
+                        </label>
+
+                        <select
+                            class="form-select"
+                            name="product_name"
+                            required>
+
+                            <option value="">
+                                Select Product
+                            </option>
+
+                            {% for product in products %}
+
+                            <option
+                                value="{{ product }}"
+                                {% if selected_product == product %}selected{% endif %}>
+
+                                {{ product }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <!-- Product Value -->
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Product Value (₹)
+                        </label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            name="product_value"
+                            min="0"
+                            step="0.01"
+                            value="{{ product_value if product_value is not none else '' }}"
+                            placeholder="Enter product value"
+                            required>
+
+                    </div>
+
+                    <!-- Weight -->
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Weight (in grams)
+                        </label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            name="weight"
+                            min="0.01"
+                            step="0.01"
+                            value="{{ weight if weight is not none else '' }}"
+                            placeholder="Enter weight"
+                            required>
+
+                        <small class="text-muted">
+                            Enter weight in the same unit used during model training.
+                        </small>
+
+                    </div>
+
+                    <!-- Destination PIN -->
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Destination PIN Code
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="destination_pin"
+                            pattern="[0-9]{6}"
+                            maxlength="6"
+                            minlength="6"
+                            inputmode="numeric"
+                            value="{{ destination_pin if destination_pin else '' }}"
+                            placeholder="Enter 6-digit PIN"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="text-center mt-4">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary btn-lg px-5">
+
+                        <i class="bi bi-calculator"></i>
+                        Predict
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- Prediction Result -->
+
+    {% if shipping_cost is not none and shipping_cost is defined %}
+
+    <div class="card shadow mt-5 border-0">
+
+        <div class="card-body text-center">
+
+            <h3 class="text-success">
+                Prediction Result
+            </h3>
+
+            <hr>
+
+            <h5>Estimated Shipping Cost</h5>
+
+            <h2 class="text-primary">
+                ₹ {{ "%.2f"|format(shipping_cost) }}
+            </h2>
+
+            <h5 class="mt-4">Estimated Delivery Time</h5>
+
+            <h2 class="text-success">
+                {{ "%.2f"|format(delivery_days) }} Days
+            </h2>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

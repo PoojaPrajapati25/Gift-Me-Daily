@@ -1,0 +1,282 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+
+<section class="bg-primary text-white rounded-4 p-5 shadow">
+
+    <div class="row align-items-center">
+
+        <div class="col-lg-6">
+
+            <h1 class="display-4 fw-bold">
+                Gift Me Daily
+            </h1>
+
+            <h3 class="mt-3">
+                Smart Shipping & Delivery Prediction System
+            </h3>
+
+            <p class="lead mt-4">
+
+                A Machine Learning based web application that helps businesses
+                estimate shipping cost and delivery time before dispatching an order.
+
+            </p>
+
+            <a href="{{ url_for('login') }}" class="btn btn-light btn-lg mt-3">
+
+                <i class="bi bi-box-arrow-in-right"></i>
+                Get Started
+
+            </a>
+
+        </div>
+
+        <div class="col-lg-6 text-center">
+
+            <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png"
+                class="img-fluid"
+                style="max-height:320px;">
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- About -->
+
+<section class="mt-5">
+
+    <div class="card shadow p-4">
+
+        <h2 class="text-center text-primary mb-4">
+
+            About Gift Me Daily
+
+        </h2>
+
+        <p class="text-center fs-5">
+
+            Gift Me Daily is an intelligent logistics prediction system that
+            uses Machine Learning to estimate shipping costs and delivery time.
+            The system helps sellers make faster decisions, reduce manual effort,
+            and improve customer experience.
+
+        </p>
+
+    </div>
+
+</section>
+
+<!-- Features -->
+
+<section class="mt-5">
+
+    <h2 class="text-center text-primary mb-4">
+
+        Our Features
+
+    </h2>
+
+    <div class="row g-4">
+
+        <div class="col-md-3">
+
+            <div class="card h-100 shadow text-center">
+
+                <div class="card-body">
+
+                    <i class="bi bi-truck display-3 text-primary"></i>
+
+                    <h4 class="mt-3">
+
+                        Shipping Cost
+
+                    </h4>
+
+                    <p>
+
+                        Predict shipping charges instantly using Machine Learning.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card h-100 shadow text-center">
+
+                <div class="card-body">
+
+                    <i class="bi bi-box-seam display-3 text-success"></i>
+
+                    <h4 class="mt-3">
+
+                        Delivery Time
+
+                    </h4>
+
+                    <p>
+
+                        Predict the estimated delivery days for every order.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card h-100 shadow text-center">
+
+                <div class="card-body">
+
+                    <i class="bi bi-clock-history display-3 text-warning"></i>
+
+                    <h4 class="mt-3">
+
+                        History
+
+                    </h4>
+
+                    <p>
+
+                        View all previous shipping and delivery predictions.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card h-100 shadow text-center">
+
+                <div class="card-body">
+
+                    <i class="bi bi-bar-chart-line display-3 text-danger"></i>
+
+                    <h4 class="mt-3">
+
+                        Analytics
+
+                    </h4>
+
+                    <p>
+
+                        Analyze prediction statistics through dashboards.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- How It Works -->
+
+<section class="mt-5">
+
+    <div class="card shadow p-4">
+
+        <h2 class="text-center text-primary mb-4">
+
+            How It Works
+
+        </h2>
+
+        <div class="row text-center">
+
+            <div class="col-md-3">
+
+                <h1>1️⃣</h1>
+
+                <h5>Login</h5>
+
+                <p>Securely login to the application.</p>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h1>2️⃣</h1>
+
+                <h5>Enter Details</h5>
+
+                <p>Provide shipment information.</p>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h1>3️⃣</h1>
+
+                <h5>Predict</h5>
+
+                <p>Machine Learning predicts shipping cost and delivery days.</p>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h1>4️⃣</h1>
+
+                <h5>Track</h5>
+
+                <p>View your prediction history anytime.</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- CTA -->
+
+<section class="bg-primary text-white rounded-4 p-5 text-center mt-5 shadow">
+
+    <h2>
+
+        Ready to Predict Your Shipping Cost?
+
+    </h2>
+
+    <p class="lead">
+
+        Login now and start using Gift Me Daily.
+
+    </p>
+
+    <a href="{{ url_for('login') }}" class="btn btn-light btn-lg">
+
+        Login Now
+
+    </a>
+
+</section>
+
+{% endblock %}

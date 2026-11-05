@@ -1,0 +1,404 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4 mb-5">
+
+    <!-- Welcome Card -->
+
+    <div class="card shadow border-0 mb-4">
+        <div class="card-body">
+
+            <h2 class="text-primary">
+                Welcome, {{ username }} 👋
+            </h2>
+
+            <p class="text-muted mb-0">
+                Here's an overview of your shipping and delivery predictions.
+            </p>
+
+        </div>
+    </div>
+
+
+    <!-- Statistics Cards -->
+
+    <div class="row g-4">
+
+        <!-- Total Predictions -->
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card text-center shadow border-0 h-100">
+                <div class="card-body">
+
+                    <i class="bi bi-clipboard-data display-4 text-primary"></i>
+
+                    <h5 class="mt-3">Total Predictions</h5>
+
+                    <h2>{{ total_predictions }}</h2>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Average Shipping -->
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card text-center shadow border-0 h-100">
+                <div class="card-body">
+
+                    <i class="bi bi-currency-rupee display-4 text-success"></i>
+
+                    <h5 class="mt-3">Average Shipping</h5>
+
+                    <h2>₹ {{ "%.2f"|format(avg_shipping|float) }}</h2>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Average Delivery -->
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card text-center shadow border-0 h-100">
+                <div class="card-body">
+
+                    <i class="bi bi-truck display-4 text-warning"></i>
+
+                    <h5 class="mt-3">Average Delivery</h5>
+
+                    <h2>{{ "%.2f"|format(avg_delivery|float) }} Days</h2>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Most Predicted Product -->
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card text-center shadow border-0 h-100">
+                <div class="card-body">
+
+                    <i class="bi bi-box-seam display-4 text-danger"></i>
+
+                    <h5 class="mt-3">Most Predicted</h5>
+
+                    <h4 class="mt-2 text-break">{{ top_product }}</h4>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Charts Section -->
+
+    <div class="row g-4 mt-3">
+
+        <!-- Shipping Chart -->
+
+        <div class="col-lg-6">
+
+            <div class="card shadow border-0 h-100">
+
+                <div class="card-body">
+
+                    <h5 class="mb-3">
+                        Shipping Cost Analysis
+                    </h5>
+
+                    {% if shipping_labels %}
+
+                    <div style="position: relative; height: 320px;">
+                        <canvas id="shippingChart"></canvas>
+                    </div>
+
+                    {% else %}
+
+                    <p class="text-muted text-center py-5">
+                        No shipping data available yet.
+                    </p>
+
+                    {% endif %}
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- Delivery Chart -->
+
+        <div class="col-lg-6">
+
+            <div class="card shadow border-0 h-100">
+
+                <div class="card-body">
+
+                    <h5 class="mb-3">
+                        Delivery Time Analysis
+                    </h5>
+
+                    {% if delivery_labels %}
+
+                    <div style="position: relative; height: 320px;">
+                        <canvas id="deliveryChart"></canvas>
+                    </div>
+
+                    {% else %}
+
+                    <p class="text-muted text-center py-5">
+                        No delivery data available yet.
+                    </p>
+
+                    {% endif %}
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Product Distribution Chart -->
+
+    <div class="row mt-4">
+
+        <div class="col-12">
+
+            <div class="card shadow border-0">
+
+                <div class="card-body">
+
+                    <h4 class="mb-4 text-center">
+                        Product Distribution
+                    </h4>
+
+                    {% if product_labels %}
+
+                    <div style="position: relative; height: 350px; max-width: 600px; margin: auto;">
+                        <canvas id="productChart"></canvas>
+                    </div>
+
+                    {% else %}
+
+                    <p class="text-muted text-center py-5">
+                        No product data available yet.
+                    </p>
+
+                    {% endif %}
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Chart.js -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+
+const shippingLabels = {{ shipping_labels | tojson }};
+const shippingValues = {{ shipping_values | tojson }};
+
+const deliveryLabels = {{ delivery_labels | tojson }};
+const deliveryValues = {{ delivery_values | tojson }};
+
+const productLabels = {{ product_labels | tojson }};
+const productValues = {{ product_values | tojson }};
+
+
+// ================= SHIPPING BAR CHART =================
+
+const shippingCanvas = document.getElementById("shippingChart");
+
+if (shippingCanvas) {
+
+    new Chart(shippingCanvas, {
+
+        type: "bar",
+
+        data: {
+
+            labels: shippingLabels,
+
+            datasets: [{
+
+                label: "Average Shipping Cost (₹)",
+
+                data: shippingValues,
+
+                backgroundColor: "#0d6efd",
+
+                borderRadius: 8
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+                    display: false
+                }
+
+            },
+
+            scales: {
+
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: "Shipping Cost (₹)"
+                    }
+                }
+
+            }
+
+        }
+
+    });
+
+}
+
+
+// ================= DELIVERY LINE CHART =================
+
+const deliveryCanvas = document.getElementById("deliveryChart");
+
+if (deliveryCanvas) {
+
+    new Chart(deliveryCanvas, {
+
+        type: "line",
+
+        data: {
+
+            labels: deliveryLabels,
+
+            datasets: [{
+
+                label: "Delivery Days",
+
+                data: deliveryValues,
+
+                borderColor: "#198754",
+
+                backgroundColor: "rgba(25, 135, 84, 0.15)",
+
+                pointBackgroundColor: "#198754",
+
+                fill: true,
+
+                tension: 0.4
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            scales: {
+
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: "Delivery Days"
+                    }
+                }
+
+            }
+
+        }
+
+    });
+
+}
+
+
+// ================= PRODUCT PIE CHART =================
+
+const productCanvas = document.getElementById("productChart");
+
+if (productCanvas) {
+
+    const productColors = productLabels.map((label, index) => {
+
+        const hue = (index * 360) / Math.max(productLabels.length, 1);
+
+        return `hsl(${hue}, 65%, 55%)`;
+
+    });
+
+    new Chart(productCanvas, {
+
+        type: "pie",
+
+        data: {
+
+            labels: productLabels,
+
+            datasets: [{
+
+                data: productValues,
+
+                backgroundColor: productColors,
+
+                borderWidth: 1
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+                    position: "bottom"
+                }
+
+            }
+
+        }
+
+    });
+
+}
+
+</script>
+
+{% endblock %}

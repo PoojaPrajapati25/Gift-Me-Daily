@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center align-items-center" style="min-height:80vh;">
+
+    <div class="col-lg-5 col-md-7">
+
+        <div class="card shadow-lg border-0 rounded-4">
+
+            <div class="card-body p-5">
+
+                <!-- Login Icon -->
+
+                <div class="text-center mb-4">
+
+                    <i class="bi bi-person-circle text-primary" style="font-size:70px;"></i>
+
+                    <h2 class="fw-bold mt-3 text-primary">
+
+                        Gift Me Daily
+
+                    </h2>
+
+                    <p class="text-muted">
+
+                        Shipping Cost & Delivery Time Prediction System
+
+                    </p>
+
+                </div>
+
+                <!-- Error Message -->
+
+                {% if error %}
+
+                <div class="alert alert-danger">
+
+                    <i class="bi bi-exclamation-circle-fill"></i>
+
+                    {{ error }}
+
+                </div>
+
+                {% endif %}
+
+                <!-- Login Form -->
+
+                <form action="{{ url_for('check_login') }}" method="POST">
+
+                    <!-- Username -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label fw-semibold">
+
+                            Username
+
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+
+                                <i class="bi bi-person-fill"></i>
+
+                            </span>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="username"
+                                placeholder="Enter Username"
+                                required>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Password -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label fw-semibold">
+
+                            Password
+
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+
+                                <i class="bi bi-lock-fill"></i>
+
+                            </span>
+
+                            <input
+                                type="password"
+                                class="form-control"
+                                name="password"
+                                placeholder="Enter Password"
+                                required>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Login Button -->
+
+                    <div class="d-grid">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary btn-lg">
+
+                            <i class="bi bi-box-arrow-in-right"></i>
+
+                            Login
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
